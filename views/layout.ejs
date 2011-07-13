@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Node.js Twitter :: <%= title %></title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+</head>
+<body>
+  <div id="wrapper">
+    <div id="header">
+      <ul id="navigation">
+        <% if(typeof user != 'undefined') { %>
+        	<li><%= user['email'] %></li>
+        <% } %>
+        <% if(typeof user != 'undefined') { %>
+        	<li><a href="/logout">Log Out</a></li>
+        <% } %>
+        <li><a href="/tweets">All tweets</a></li>
+        <li><a href="/">Home</a></li>
+        <% if(typeof error != 'undefined' ) { %>
+        <li class="error"><%= error %></li>
+        <% } %>
+        <% if(typeof info != 'undefined' ) { %>
+        <li class="info"><%= info %></li>
+        <% } %>
+      </ul>
+    </div>
+    <div id="container">
+     <% if(typeof user != 'undefined') { %>
+      <form method="post" action="/tweet">
+	      <div class="content">        
+	      	<h1><a href="#">What are you thinking about?</a></h1>
+	        <p>
+	          	<textarea name="body" id="new_tweet" onkeypress="onTestChange();"></textarea>
+	        </p>
+	      </div>
+	      <div class="sidebar">
+	      	<div>
+	      	<% if(typeof current_user != 'undefined' && can_follow) { %>
+	      	<img width="160" height="160" 
+	      		src="<%= current_user["gravatar"] %>?s=160" />
+	        <a href="/user/<%= current_user['id'] %>/follow" class="awesome">Follow</a>
+	        <% } else if(typeof current_user != 'undefined' && !can_follow) { %>
+	      	<img width="160" height="160" 
+	      		src="<%= current_user["gravatar"] %>?s=160" />
+	        <a href="/user/<%= current_user['id'] %>/unfollow" class="awesome">Unfollow</a>
+	        <% } else { %>
+	      	<img width="160" height="160" 
+	      		src="<%= user["gravatar"] %>?s=160" />
+	        <input type="submit" id="post_button" class="awesome" />
+	        <% } %>
+	        </div>
+	      </div>
+      </form>
+      <div id="data">
+      	<%- body %>
+      </div>
+    <% } else { %>
+    	<%- partial('login.ejs') %>
+    <% } %>
+    </div>
+  </div>
+	<script>
+	function onTestChange(evt) {
+            evt = evt || window.event;
+
+            if (evt.keyCode == 13) {
+                document.forms[0].submit();
+            }
+
+            evt.stopPropagation();
+            return false;
+        };
+	</script>
+</body>
+</html>

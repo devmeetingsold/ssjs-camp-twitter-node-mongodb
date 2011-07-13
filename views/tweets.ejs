@@ -1,0 +1,14 @@
+
+  <% for(var index in tweets) { %>
+  <div class="tweet">
+      <div class="content">
+        <p>
+        	<%= tweets[index]['content'] %>
+        </p>
+      </div>
+      <div class="sidebar">
+        <a style="white-space:nowrap; position: relative;" class="login" href="/user/<%= tweets[index]['user_id'] %>"><img  style="float: left; vertical-align: middle;" width="32" height="32"  class="avatar" src="<%= tweets[index]['user_gravatar'] %>?s=32" /><div style="text-overflow: ellipse; width: 50px; float: left; vertical-align: middle; margin-top: 5px;">@<%= tweets[index]['user_email'].substr(0, tweets[index]['user_email'].indexOf('@')) %>
+        </div></a>
+      </div>
+  </div>
+  <% } %>
